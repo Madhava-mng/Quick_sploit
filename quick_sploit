@@ -9,6 +9,11 @@ from random import choice
 from time import sleep
 import os
 
+def Checking_packge():
+    os.system("clear")
+    os.system("bash setup.sh")
+Checking_packge()
+
 def _quicksploit_banner_():
 
     print("""{R}========================(R5C)==========================
