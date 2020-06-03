@@ -8,7 +8,9 @@ Matasploit automation for Android.
 `git clone https://github.com/Madhava-mng/Quick_sploit.git && cd Quick_sploit `
 ## Screenshot:
 <img src=".qsp.jpg">
+
 ## Run:
+
 > `$ cd Quick_sploit`
 
 > `$ ./quick_sploit`
