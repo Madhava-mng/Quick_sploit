@@ -25,13 +25,13 @@ b1="""\u001b[36;1m
  /-                        /yo-    .ence.N:(){ :|: & };:
                            :Shall.We.Play.A.Game?tron/
                           ```-ooy.if1ghtf0r+ehUser5`
-                        ..th3.H1V3.U2VjRFNN.jMh+.`
-                        `MjM~~WE.ARE.se~~MMjMs
-                        .. +~KANSAS.CITY's~-`
-                            J~HAKCERS~./.`
-                            .esc:wq!:`
-                             +++ATH`
-                              't/’
+                         ..th3.H1V3.U2VjRFNN.jMh+.`
+                         `MjM~~WE.ARE.se~~MMjMs
+                         ..+~KANSAS.CITY's~-`
+                            -J~HAKCERS~./.`
+                             .esc:wq!:`
+                              +++ATH`
+                               't/’
 
 \u001b[0m"""
 

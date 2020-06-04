@@ -1,18 +1,12 @@
-<body>Quick sploit</body>
-<style>
-body{
-background-color:grey
-}
-</style>
+# Quick_sploit
 Matasploit automation for Android.
-<h4><u>Requirements</u>:</h4>
+## Requirements:
 * Linux or Termux
 * Python3
-* Metasploit-framework 
-* If not.it install autamatically 
-<h4><u>Installation</u>:</h4>
+* Metasploit-framework (If not .It install automatically .)
+## Installation:
 `git clone https://github.com/Madhava-mng/Quick_sploit.git && cd Quick_sploit `
-<h4 style="backgrond-color: Tomato;"><u>Screenshot</u>:</h4>
+## Screenshot:
 <img src=".qsp.jpg">
 
 ## Run:
