@@ -55,6 +55,7 @@ def col(t="N"):
         return "\u001b[2m"
 
 
+
 def print_console(host,port,pay):
     """
     Formated Print Table
@@ -146,15 +147,18 @@ def banner1():
 Configaring module.txt
 
 """
-
-
-conf=open("module.txt","r")
 List={}
-count=0
-for i in conf:
-    List[count]=i.replace("\n","")
-    count+=1
-conf.close()
+try:
+    conf=open("module.txt","r")
+    count=0
+    for i in conf:
+        if i.strip() != "":
+            List[count]=i.replace("\n","")
+            count+=1
+    conf.close()
+except:
+    print(col("R")+"------\t\tSome files are not found  \t------"+col())
+    raise SystemExit()
 
 
 def Search(_word_,List=List):
@@ -169,7 +173,7 @@ def Search(_word_,List=List):
     for i in List:
         w=search(r"(.*?)"+_word_+"(.*).*",str(List[i]),ASCII)
         try:
-            print("      "+col("R")+"{:>2}".format(str(i))+col("G")+" - "+col()+w.group())
+            print("      "+col("R")+"{:>2}".format(str(i))+col("G")+" - "+col()+w.group(1)+col("G")+_word_+col()+w.group(2))
         except:
             pass
     print(col("S")+"\n    -------------------------------------------"+col())

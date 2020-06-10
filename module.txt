@@ -21,3 +21,6 @@ python/shell_reverse_tcp
 python/shell_reverse_udp
 python/pingback_reverse_tcp
 python/shell_reverse_tcp_ssl
+cmd/unix/reverse_python
+cmd/unix/reverse_python_ssl
+
